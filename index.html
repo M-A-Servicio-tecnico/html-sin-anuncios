@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS TV - Player</title>
+    <title>MS TV - Player Limpio</title>
     <style>
         body, html {
             margin: 0;
@@ -13,26 +13,20 @@
             background-color: #000;
             overflow: hidden;
         }
-        #player-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        #error-msg {
+        #loading {
             color: white;
             font-family: sans-serif;
             text-align: center;
-            margin-top: 20vh;
+            padding-top: 40vh;
         }
     </style>
 </head>
 <body>
 
-    <iframe id="player-frame" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
-    <div id="error-msg" style="display:none;"><h2>Cargando canal...</h2></div>
+    <div id="loading"><h2>Cargando señal limpia...</h2></div>
 
     <script>
-        // Esta función lee la URL del canal que le mande tu aplicación de Android
+        // Función para capturar el parámetro 'url' que manda Android
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -40,17 +34,14 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
-        var streamUrl = getParameterByName('url');
-        var iframe = document.getElementById('player-frame');
+        var targetUrl = getParameterByName('url');
 
-        if (streamUrl) {
-            iframe.src = streamUrl;
+        if (targetUrl) {
+            // En lugar de iframe, redirigimos el navegador interno a la web del canal
+            window.location.replace(targetUrl);
         } else {
-            document.getElementById('error-msg').style.display = 'block';
+            document.getElementById('loading').innerHTML = "<h2>No se encontró el canal</h2>";
         }
-
-        // Blindaje extra para frenar cualquier pop-up interno que intente abrir otra pestaña
-        window.open = function() { return null; };
     </script>
 </body>
 </html>
