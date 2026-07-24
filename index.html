@@ -18,6 +18,11 @@
             font-family: sans-serif;
             text-align: center;
             padding-top: 40vh;
+            background: #000;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
         }
     </style>
 </head>
@@ -26,7 +31,6 @@
     <div id="loading"><h2>Cargando señal limpia...</h2></div>
 
     <script>
-        // Función para capturar el parámetro 'url' que manda Android
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -37,7 +41,7 @@
         var targetUrl = getParameterByName('url');
 
         if (targetUrl) {
-            // En lugar de iframe, redirigimos el navegador interno a la web del canal
+            // Creamos un iframe interno o redirigimos inyectando CSS para recortar
             window.location.replace(targetUrl);
         } else {
             document.getElementById('loading').innerHTML = "<h2>No se encontró el canal</h2>";
