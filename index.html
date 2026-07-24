@@ -1,1 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS TV - Player</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+        }
+        #player-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #error-msg {
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 20vh;
+        }
+    </style>
+</head>
+<body>
 
+    <iframe id="player-frame" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+    <div id="error-msg" style="display:none;"><h2>Cargando canal...</h2></div>
+
+    <script>
+        // Esta función lee la URL del canal que le mande tu aplicación de Android
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        var streamUrl = getParameterByName('url');
+        var iframe = document.getElementById('player-frame');
+
+        if (streamUrl) {
+            iframe.src = streamUrl;
+        } else {
+            document.getElementById('error-msg').style.display = 'block';
+        }
+
+        // Blindaje extra para frenar cualquier pop-up interno que intente abrir otra pestaña
+        window.open = function() { return null; };
+    </script>
+</body>
+</html>
